@@ -18,9 +18,9 @@ use App\Http\Controllers\MemberController;
 //     return view('welcome')->with("foo", "bar");
 // })->name('welcome');
 
-// Route::get('/app', function () {
-//     return view('app');
-// });
+Route::get('/app', function () {
+    return view('app');
+});
 
 
 Route::get('/member', [MemberController::class, 'index']);
