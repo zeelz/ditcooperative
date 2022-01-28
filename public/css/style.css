@@ -1793,3 +1793,7 @@ section {
     color: #4d954f !important;
     text-decoration: none;
 }
+
+.tester-class {
+    margin: 20px;
+}

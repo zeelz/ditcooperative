@@ -14,22 +14,4 @@ yarn-error.log
 /.idea
 /.vscode
 
-
-/tests
-/storage
-/routes
-/resources
-/database
-/config
-/bootstrap
-/artisan
-/app
-composer.lock
-server.php
-phpunit.xml
-README.md
-package.json
-package-lock.json
-composer.json
-webpack.mix.js
-Archive.zip
+*.DS_Store
