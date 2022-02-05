@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Code;
 use App\Models\Tester;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewRegistration;
 
 class MemberController extends Controller
 {
@@ -89,12 +91,42 @@ class MemberController extends Controller
         $code->code = Str::random(10);
         $code_save = $code->save();
 
+        if ($member_save && $code_save) {
+
+            // construct member data to be passed to mailable
+            $member_data = [
+                'name' => $member->firstname ." ".  $member->lastname,
+                'phone' => $member->phone,
+                'email' => $member->email,
+                'referrer_name' => $member->referrer_name,
+                'kin_name' => $member->kin_name,
+                'kin_phone' => $member->kin_phone,
+                'account_number' => $member->account_number,
+                'bank' => $member->bank,
+                'date_of_payment' => $member->date_of_payment,
+                'code' => $code->code
+            ];
 
 
-        
-        return back()->with('success', 'Your account has been created');
-        
+
+            // send mail here //
+            $this->sendNewRegistrationMail($member_data);
+
+            return back()->with('success', 'Your account has been created');
+        } else {
+            return  "Registration failed";
+        }
         
 
+    }
+
+    public function sendNewRegistrationMail($md)
+    {
+        // return view('mails/newreg')->with('name', 'John Wikina');
+
+        $recipient = "hello@ditcooperative.com";
+
+        Mail::to($recipient)->send(new NewRegistration($md));
+        // return "mail sent";
     }
 }
