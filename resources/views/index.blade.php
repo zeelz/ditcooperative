@@ -148,11 +148,14 @@
             @endif
             
             @if ($message = Session::get('success'))
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert">
                 <strong>{{ $message }}</strong>
+                
+                <a href="home" class="btn btn-sm rounded-pill" style="color: var(--main-accent-text); border: solid 1px var(--main-accent-text);">Go to Your Profile</a>
+
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <div class="text-center mb-3"><a href="home" class="btn btn-outline-primary rounded-pill">Go to Your Profile</a></div>
+              </div>
+              <div class="text-center mb-3"></div>
             
             @endif
 
