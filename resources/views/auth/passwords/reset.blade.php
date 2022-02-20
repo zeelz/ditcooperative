@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container d-flex flex-column justify-content-center py-4" style="height: calc(100vh - 100px)">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

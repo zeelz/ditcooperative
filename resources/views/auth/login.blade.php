@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="align-items-center container d-flex justify-content-center py-4" style="height: 100vh">
+<div class="align-items-center container d-flex justify-content-center py-4" style="height: calc(100vh - 100px)">
     <div class="row justify-content-center w-100">
         <div class="col-md-6">
             <div class="card">
@@ -46,7 +46,7 @@
                                 </div>
 
                                 <div class="">
-                                    Don't have an account? <a class="text-main" href="/">{{ __('Register') }}</a>
+                                    Forgotten password? <a class="text-main" href="/password/reset">{{ __('Reset') }}</a>
                                 </div>
                             </div>
                         </div>
