@@ -152,8 +152,9 @@
                     <td>{{ $member->account_number }}</td>
                     <td>{{ $member->bank }}</td>
                     <td class="text-center">
+                      <input id="member_id" type="hidden" name="member_id" value="{{ $member->id }}">
                         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#approvalForPayment">
-                            Deactivate Member
+                            Drop Member
                         </button>
                     </td>
                 </tr>
@@ -190,15 +191,28 @@
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="approvalForPaymentLabel"><strong>Approve for Payment</strong></h5>
+        <h5 class="modal-title" id="approvalForPaymentLabel"><strong>Drop Member</strong></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <p>Are you sure you this member has met all obligations for payment?</p>
+            <p>Are you sure you this member has been paid?</p>
         </div>
+        
         <div class="modal-footer">
-        <button type="button" class="btn btn-outline border" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Yes</button>
+          <button type="button" class="btn btn-outline border" data-bs-dismiss="modal">Close</button>
+
+          <form id="confirmForm" action="/admin.pay" method="POST">
+            <input type="hidden" name="member_id" value="">
+            @csrf()
+
+
+
+
+            <button id="confirmInitiator" type="submit" class="btn btn-main" data-bs-dismiss="modal">Yes</button>
+
+          </form>
+
+
         </div>
     </div>
     </div>
@@ -219,6 +233,31 @@
   <!-- Template Main JS File -->
   <script src="{{ URL::asset('js/main.js') }}"></script>
 
+  {{-- confirmation --}}
+  <script>
+    const confirmInitiator = document.querySelector('#confirmInitiator');
+    const confirmForm = document.querySelector('#confirmForm');
+    const memberId = document.querySelector('#member_id');
+    
+    confirmInitiator.addEventListener('click', e => {
+      e.preventDefault();
+
+      let i = document.createElement('input');
+      i.setAttribute("value", memberId.value);
+      i.setAttribute("type", "hidden");
+      i.setAttribute("name", "member_id");
+
+      confirmForm.appendChild(i);
+
+      confirmForm.submit();
+
+      // let ss = e.target.parentNode;
+      
+      // console.log(confirmForm);
+
+    })
+
+  </script>
 </body>
 
 </html>

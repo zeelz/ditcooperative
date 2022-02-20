@@ -23,12 +23,14 @@ use App\Http\Controllers\AdminController;
 Route::get('/admin', [MemberController::class, 'd_confirm']);
 Route::get('/payment', [MemberController::class, 'payment']);
 
+
 // Route::get('/admin.register', [AdminController::class, 'register']);
 Route::get('/admin.login', [AdminController::class, 'login']);
 Route::post('/admin.login', [AdminController::class, 'authenticate'])->name('admin.login');
 Route::post('/admin.logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 Route::post('/admin.confirm', [MemberController::class, 'confirmed']);
+Route::post('/admin.pay', [MemberController::class, 'pay']);
 
 
 Route::get('/member', [MemberController::class, 'index']);
@@ -38,6 +40,6 @@ Route::post('/member', [MemberController::class, 'create'])->name('member-reg');
 Auth::routes();
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->middleware('auth');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->middleware(['auth']);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index', ['referral']);

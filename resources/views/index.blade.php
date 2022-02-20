@@ -195,29 +195,21 @@
 
               <div class="row mb-2">
                 <div class="col-md-6 form-group">
-                  <label for="referrer_name">Referrer's Name <span class="text-muted fs-6">(As it appears on their bank details)</span> 
-                  </label>
-                  <input type="text" class="form-control mt-2" required name="referrer_name">
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
                   <label for="">Enter full name of your Next-of-Kin</label>
                   <input type="text" required name="kin_name" class="form-control mt-2" >
                 </div>
-              </div>
-
-              <div class="row mb-2">
-                <div class="col-md-6 form-group"> 
+                <div class="col-md-6 form-group mt-3 mt-md-0"> 
                   <label for="">Enter your Next-of-Kin phone number</label>
                   <input type="text" class="form-control mt-2" required name="kin_phone">                 
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <label for="">Enter your account number </label>
-                  <input type="text" required name="account_number" class="form-control mt-2">
                 </div>
               </div>
 
               <div class="row mb-2">
                 <div class="col-md-6 form-group">
+                  <label for="">Enter your account number </label>
+                  <input type="text" required name="account_number" class="form-control mt-2">
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
                   <label for="">Select Your Bank</label>
                   <select class="form-control mt-2" required name="bank" id="">
                     <option value="" selected disabled>Select your bank</option>
@@ -242,29 +234,29 @@
                     <option value="Wema Bank">Wema Bank</option>
                   </select>
                 </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-md-6 form-group">
                   <label for="">Please upload your payment confirmation</label>
                   <input type="file" required name="payment_confirm" class="form-control mt-2">
                 </div>
-              </div>
-
-              <div class="row mb-2">
-                <div class="col-md-6 form-group">
+                <div class="col-md-6 form-group mt-3 mt-md-0">
                   <label for="date_of_payment">Enter date of payment</label>
                    <input type="date" class="form-control mt-2" required name="date_of_payment">
                 </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <label for="referral_code">Enter referral code</label>
-                   <input type="text" class="form-control mt-2" name="referral_code" value="{{ $referral }}">
-                </div>
               </div>
 
               <div class="row mb-2">
-                <div class="col-md-6 form-group">
+                <div class="col-md-4 form-group">
+                  <label for="referral_code">Enter referral code</label>
+                   <input type="text" class="form-control mt-2" name="referral_code" value="{{ $referral }}">
+                </div>
+                <div class="col-md-4 form-group mt-3 mt-md-0">
                   <label for="password">Create a password</label>
                   <input type="password" class="form-control mt-2" name="password" id="password">
                 </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
+                <div class="col-md-4 form-group mt-3 mt-md-0">
                   <label for="confirmPassword">Confirm password</label>
                   <input type="password" class="form-control mt-2" required name="confirmPassword" id="confirmPassword">
                 </div>
@@ -314,7 +306,7 @@
               @csrf
               
               
-              <div class="text-center"><button class="btn btn-lg" type="submit">Submit</button></div>
+              <div class="text-center"><button class="btn btn-lg" type="submit">Register</button></div>
             </form>
 
           </div>

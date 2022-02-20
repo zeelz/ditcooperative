@@ -57,7 +57,7 @@ class MemberController extends Controller
         
         if(Session::has('LoggedAdmin')){
                 
-            $members = User::where('type', 'member')->where('confirmed_for_payment', 1)->get();
+            $members = User::where('paid', 0)->where('confirmed_for_payment', 1)->get();
             return view('admin.payment')->with('members', $members);
 
         } else {
@@ -84,6 +84,21 @@ class MemberController extends Controller
         return back();
 
     }
+
+
+    // PAY - DROP MEMBERS
+    public function pay(Request $request)
+    {
+        $id = $request->member_id;
+
+        $memberToPay = User::find($id);
+        $memberToPay->paid = 1;
+        $res = $memberToPay->update();
+
+        return back();
+
+    }
+
 
 
 
@@ -127,7 +142,6 @@ class MemberController extends Controller
         $member->phone = $request->phone;
         $member->email = $request->email; 
         $member->password = Hash::make($request->password);
-        $member->referrer_name = $request->referrer_name;
         $member->kin_name = $request->kin_name;
         $member->kin_phone = $request->kin_phone;
         $member->account_number = $request->account_number;

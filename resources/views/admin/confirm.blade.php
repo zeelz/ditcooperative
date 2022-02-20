@@ -126,7 +126,7 @@
     </section>
               
     <section id="pricing" class="pricing">
-      <div class="container">
+      <div class="container table-responsive">
 
         <h3 class="mb-4 fw-bold" id="regform" >Payment Confirmation Table</h3>
         <table class="table table-striped table-bordered">
@@ -138,6 +138,7 @@
                     <th scope="col">Account Number</th>
                     <th scope="col">Bank</th>
                     <th scope="col">Date of Payment</th>
+                    <th scope="col" class="text-center">Receipt</th>
                     <th scope="col" class="text-center">Action</th>
                 </tr>
             </thead>
@@ -147,7 +148,7 @@
 
             @foreach ($members as $member)
     
-              @if ($member->confirmed_for_payment === 0)
+              @if ($member->confirmed_for_payment === 0 && $member->paid === 0)
                 <tr>
                     <td>{{ $member->id }}. {{ $member->firstname }} {{ $member->lastname }}</td>
 
@@ -166,6 +167,13 @@
                     <td>{{ $member->account_number }}</td>
                     <td>{{ $member->bank }}</td>
                     <td>{{ $member->date_of_payment }}</td>
+                    <td class="text-center">                      
+                      
+                      <button type="button" class="btn btn-sm viewReceipt">
+                        <input type="hidden" name="paymentReceiptUrl" value="{{ $member->payment_confirm_url }}">
+                        <img src="img/show.png" alt="View icon" style="height: 24px">
+                      </button>
+                    </td>
                     <td class="text-center">
 
                         <input id="member_id" type="hidden" name="member_id" value="{{ $member->id }}">
@@ -204,8 +212,8 @@
   <!-- End Footer -->
 
 
-  <!-- Modal -->
-<div class="modal fade" id="approvalForPayment" tabindex="-1" aria-labelledby="approvalForPaymentLabel" aria-hidden="true">
+  <!-- confirm modal -->
+  <div class="modal fade" id="approvalForPayment" tabindex="-1" aria-labelledby="approvalForPaymentLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
@@ -222,9 +230,6 @@
             <input type="hidden" name="member_id" value="foobar">
             @csrf()
 
-
-
-
             <button id="confirmInitiator" type="submit" class="btn btn-main" data-bs-dismiss="modal">Yes</button>
 
           </form>
@@ -233,6 +238,24 @@
         </div>
     </div>
     </div>
+</div>
+
+
+<!-- payment receipt view modal -->
+<div class="modal fade" id="paymentReceipt" tabindex="-1" aria-labelledby="paymentReceiptLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+  <div class="modal-content">
+      <div class="modal-header__ text-end pe-3 pt-3">
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center pt-0">
+        <img src="" class="img-fluid">
+
+
+
+      </div>
+  </div>
+  </div>
 </div>
 
 
@@ -273,6 +296,39 @@
       // console.log(confirmForm);
 
     })
+
+  </script>
+
+  <script>
+
+    let imageUrl;
+
+    const viewReceipt = document.querySelectorAll('.viewReceipt')
+    const paymentReceipt = document.getElementById('paymentReceipt')
+
+    // create new instance of the modal
+    const paymentReceiptModal = new bootstrap.Modal(document.getElementById('paymentReceipt'), {
+      keyboard: true
+    })
+
+    // listen for eye clicked
+    viewReceipt.forEach(item => {
+        item.addEventListener('click', e => {
+            e.preventDefault()
+            // traverse up then in to grab value of hidden url
+            imageUrl = e.target.parentNode.querySelector('input').value
+            // show the modal
+            paymentReceiptModal.show()
+        })
+    })
+
+   // listen for modal event to inject custom DOM element
+    paymentReceipt.addEventListener('show.bs.modal', e => {
+      // get img within modal
+      const img = e.target.querySelector('.modal-body img')
+      img.setAttribute('src', imageUrl)
+    })
+
 
   </script>
 </body>
