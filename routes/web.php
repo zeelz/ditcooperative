@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +20,15 @@ use App\Http\Controllers\MemberController;
 //     return view('welcome')->with("foo", "bar");
 // })->name('welcome');
 
-Route::get('/app', function () {
-    return view('app');
-});
+Route::get('/admin', [MemberController::class, 'd_confirm']);
+Route::get('/payment', [MemberController::class, 'payment']);
+
+// Route::get('/admin.register', [AdminController::class, 'register']);
+Route::get('/admin.login', [AdminController::class, 'login']);
+Route::post('/admin.login', [AdminController::class, 'authenticate'])->name('admin.login');
+Route::post('/admin.logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+Route::post('/admin.confirm', [MemberController::class, 'confirmed']);
 
 
 Route::get('/member', [MemberController::class, 'index']);

@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Code::class);
     }
+
+    public function referrals()
+    {
+        return $this->hasMany(Referral::class);
+    }
 }

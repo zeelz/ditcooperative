@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Home | Dit Cooperative</title>
+  <title>Payment List | Dit Cooperative</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -32,14 +32,14 @@
 
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top ">
+  <header id="header" class="bg-dark fixed-top position-relative">
     <div class="container d-flex align-items-center justify-content-between">
 
       <h1 class="logo">
-        <a href="/">
+        <a href="index.html">
           <img src="img/ditco_logo.png" alt="ditco logo">
           {{-- <img src="storage/img/9GnY8Qq4P4SgJWy7D7LoNxACCXmZfqa2Ha3JEmZn.jpg" alt=""> --}}
         </a>
@@ -82,8 +82,6 @@
             </li>
 
           @endguest
-          
-
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -94,81 +92,85 @@
 
   <main id="main">
     
-              
+    <section class="p-4" style="background: #f6f4f4">
+      <div class="container d-flex justify-content-between">
+        <h2>Admin Area</h2>
 
-     <!-- ======= Cta Section ======= -->
-     <section id="cta" class="cta">
-      <div class="container">
+        @if(session()->has('LoggedAdmin'))
+          {{-- {{ session()->get('LoggedAdmin') }} --}}
+        @endif
 
-        <div class="align-items-center d-flex flex-column justify-content-center text-center">
-          <div class="profile-box">
-            <img src="{{ Auth::user()->passport_url }}" alt="" class="img-fluid">
-          </div>
-          <h3 class="pt-3">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</h3>
-          <a id="referralCode" class="cta-btn fs-5 btn-main" href="#">{{ Auth::user()->code->code }}</a>
-        
-          <p id="copiedMsg" class="small">Click button to copy your referral code</p>
+        <div>
+          <ul>
+            <li class="d-inline me-2"> <a class=" small link-success" href="/admin">Confirmation List</a> </li>
+            <li class="d-inline me-2"> <a class=" small link-success" href="/payment">Paid List</a> </li>
+            
 
+            <li class="d-inline">
+
+              <a href="{{ route('admin.logout') }}"
+                  onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                  {{ __('Logout') }}
+              </a>
+
+              <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                  @csrf
+              </form>
+              </li>
+          </ul>
         </div>
 
+  
       </div>
-    </section><!-- End Cta Section -->
-
-    <!-- ======= Pricing Section ======= -->
+    </section>
+              
     <section id="pricing" class="pricing">
       <div class="container">
 
-        <div class="section-title">
-          <h2>profile</h2>
-          <h3>Member <span>Details</span></h3>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-4 offset-2">
-            <div class="box recommended">
-              <span class="recommended-badge">My Referrals</span>
-              
-              <ul class="mt-4">
-
-                @foreach (Auth::user()->referrals as $referral)
-                  <li class="bg-white border border-success d-inline-block mb-1 mx-1 px-2 py-1 rounded-3 rounded-pill small fst-italic text-success">
-
-                    {{ $members[$referral->referral_id -1]->firstname }}
-                    {{ $members[$referral->referral_id -1]->lastname }}
-
-                  </li>
-                @endforeach
-              </ul>
-            </div>
-          </div>
+        <h3 class="mb-4 fw-bold" id="regform" >Paid Members Table</h3>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Account Number</th>
+                    <th scope="col">Bank</th>
+                    <th scope="col" class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
 
 
-          <div class="col-lg-4 mt-4 mt-lg-0">
-            <div class="box recommended">
-              <span class="recommended-badge">Payments</span>
+            @foreach ($members as $member)
 
-              <div class="mt-4">
-                <strong>{{ Auth::user()->date_of_payment }}</strong> 
-              </div>
-              
+    
 
-              {{-- <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
-              </div> --}}
-            
-            </div>
-          </div>
+                <tr>
+                    <td>{{ $member->firstname }} {{ $member->lastname }}</td>
+                    <td>{{ $member->phone }}</td>
+                    <td>{{ $member->account_number }}</td>
+                    <td>{{ $member->bank }}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#approvalForPayment">
+                            Deactivate Member
+                        </button>
+                    </td>
+                </tr>
 
-        </div>
+
+            @endforeach
+
+            </tbody>
+        </table>
 
       </div>
-    </section><!-- End Pricing Section -->
+    </section>
 
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <footer id="footer">
+  <footer id="footer" class="mt-auto">
     <div class="container d-flex justify-content-between">
       <div class="copyright">
         &copy; Copyright <strong><span>Dit Cooperative</span></strong>. All Rights Reserved
@@ -181,6 +183,27 @@
     </div>
   </footer>
   <!-- End Footer -->
+
+
+  <!-- Modal -->
+<div class="modal fade" id="approvalForPayment" tabindex="-1" aria-labelledby="approvalForPaymentLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="approvalForPaymentLabel"><strong>Approve for Payment</strong></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you this member has met all obligations for payment?</p>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-outline border" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Yes</button>
+        </div>
+    </div>
+    </div>
+</div>
+
 
   <!-- Vendor JS Files -->
   <!-- <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script> -->
@@ -195,36 +218,6 @@
 
   <!-- Template Main JS File -->
   <script src="{{ URL::asset('js/main.js') }}"></script>
-
-  {{-- click to copy script --}}
-  <script>
-    const refCode = document.querySelector('#referralCode');
-    const copiedMsg = document.querySelector('#copiedMsg');
-
-    refCode.addEventListener('click', e => {
-      e.preventDefault()
-
-      if(!navigator.clipboard){
-        return;
-      }
-      const baseUrl = "https://ditcooperative.com/";
-
-      navigator.clipboard.writeText(`${baseUrl}?referral=${refCode.innerHTML}`)
-      .then(() => {
-        const originalMsg = copiedMsg.innerHTML;
-        copiedMsg.innerHTML = "Link copied!";
-        setTimeout(() => {
-          copiedMsg.innerHTML = originalMsg;
-        }, 3000);
-      })
-      .catch( err => console.log(err))
-
-
-    })
-    
-
-
-  </script>
 
 </body>
 

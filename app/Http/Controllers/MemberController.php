@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use App\Mail\NewRegistration;
 use App\Models\User;
 use App\Models\Code;
-use App\Models\Tester;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewRegistration;
+use App\Models\Referral;
 
 class MemberController extends Controller
 {
@@ -29,6 +31,63 @@ class MemberController extends Controller
 
     }
 
+
+
+    // SHOW CONFIRM TABLE
+    public function d_confirm()
+    {
+        // User::find(auth()->user()->id)->code->code;
+
+        // $members = User::where('type', 'member')->where('confirmed_for_payment', 0)->get();
+
+        if(Session::has('LoggedAdmin')){
+            
+            $members = User::get();
+            return view('admin.confirm')->with('members', $members);
+
+        } else {
+            return redirect('/admin.login');
+        }
+    }
+
+
+    // SHOW PAYMENT TABLE
+    public function payment()
+    {
+        
+        if(Session::has('LoggedAdmin')){
+                
+            $members = User::where('type', 'member')->where('confirmed_for_payment', 1)->get();
+            return view('admin.payment')->with('members', $members);
+
+        } else {
+            return redirect('/admin.login');
+        }
+    }
+
+
+
+    // CONFIRM (ADD) MEMBERS TO PAYMENT LIST
+    public function confirmed(Request $request)
+    {
+
+        // dd($request->member_id);
+
+        $id = $request->member_id;
+
+        $memberToUpdate = User::find($id);
+        $memberToUpdate->confirmed_for_payment = 1;
+        $res = $memberToUpdate->update();
+
+        // return redirect('/app');
+
+        return back();
+
+    }
+
+
+
+    // CREATE A NEW MEMBER
     public function create(Request $request)
     {
 
@@ -41,12 +100,14 @@ class MemberController extends Controller
             if($fcode && $request->referral_code === $fcode->code) {
                
                 
-                $referrerCode  = $fcode->user_id;
+                $referrer_id  = $fcode->user_id;
                             
 
             } else {
                 return back()->with('error', 'Your referral code is invalid! Please, enter a valid one or leave blank.');
             }
+        } else {
+            // $referrer_id = '';
         }
 
          // transform storage link to public link
@@ -82,9 +143,17 @@ class MemberController extends Controller
         $member->passport_url = $passport_url;
         $member->payment_confirm_url = $payment_confirm_url;
 
-        $member->referrer = $referrerCode;
-
         $member_save = $member->save();
+
+
+        if(isset($referrer_id)){
+            $referrer = new Referral;
+            $referrer->user_id = $referrer_id;
+            $referrer->referral_id = $member->id;
+            $referrer->save();
+        }
+
+
 
         $code = new Code;
         $code->user_id = $member->id;

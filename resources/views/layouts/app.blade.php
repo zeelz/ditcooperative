@@ -24,6 +24,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
 </head>
 <body>
     <div id="app">
