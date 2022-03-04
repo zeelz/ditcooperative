@@ -90,11 +90,11 @@
 
           @endguest
           
-          <li>
+          {{-- <li>
             <a class="nav-link scrollto" href="admin.login">
               <img src="img/padlock.png" alt="Admin Login" style="height: 20px">
             </a>
-          </li>
+          </li> --}}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -129,16 +129,16 @@
 
         <div class="row mt-5">
   
-          <div class="col-lg-10 offset-lg-1 mt-5 mt-lg-0">
+          <div class="col-lg-10 offset-lg-1 mt-5 mt-lg-0">            
            
-            @if ($message = Session::get('error'))
-              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{-- @if ($message = Session::get('error'))
+              <div id="successMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>{{ $message }}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            @endif
+              </div>
+            @endif --}}
             
-            @if ($message = Session::get('success'))
+            {{-- @if ($message = Session::get('success'))
               <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert">
                 <strong>{{ $message }}</strong>
                 
@@ -148,7 +148,7 @@
               </div>
               <div class="text-center mb-3"></div>
             
-            @endif
+            @endif --}}
 
             <h2 class="mb-4 text-center fw-bold" id="regform" >Registration Form</h2>
 
@@ -343,7 +343,49 @@
   <script src="{{ URL::asset('vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
   <script src="{{ URL::asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
   <!-- <script src="{{ URL::asset('vendor/php-email-form/validate.js') }}"></script> -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
+  <script>
+   
+   // change to Session::has('success')
+    @if ($message = Session::get('success'))
+
+      swal({
+        title: "Success",
+        text: "Your account has been created",
+        icon: "success",
+        buttons: {
+          cancel: "OK",
+          profile: {
+            text: "Go to New Profile",
+            value: "profile",
+            className: 'btn-main'
+          }
+        },
+      }).then( res => {
+        if(res === 'profile') location.href = '/home'
+      })
+
+    @endif
+
+    @if ($message = Session::get('error'))
+      swal({
+        title: "Error",
+        text: "Registration failed",
+        icon: "error"
+      })
+    @endif
+
+
+    @if ($message = Session::get('codeError'))
+      swal({
+        title: "Error",
+        text: "Your referral code is invalid! Please, enter a valid one or leave blank.",
+        icon: "error"
+      })
+    @endif
+  </script>
 
 
   <!-- Template Main JS File -->

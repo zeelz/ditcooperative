@@ -119,7 +119,7 @@ class MemberController extends Controller
                             
 
             } else {
-                return back()->with('error', 'Your referral code is invalid! Please, enter a valid one or leave blank.');
+                return back()->with('codeError', true);
             }
         } else {
             // $referrer_id = '';
@@ -195,9 +195,9 @@ class MemberController extends Controller
             // send mail here //
             $this->sendNewRegistrationMail($member_data);
 
-            return back()->with('success', 'Your account has been created');
+            return back()->with('success', true);
         } else {
-            return  "Registration failed";
+            return back()->with('error', true);
         }
         
 
