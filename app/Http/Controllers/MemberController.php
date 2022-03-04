@@ -18,17 +18,16 @@ class MemberController extends Controller
     public function index()
     {
 
-    //    return view('auth/member-form');
+        //    return view('auth/member-form');
         return redirect('/');
 
         $user_code = Code::where('code', 'ju84659td2')->first();
-        
+
         // User::find(auth()->user()->id)->code->code;
 
         // $user_code = 
 
         dd($user_code->code);
-
     }
 
 
@@ -40,11 +39,10 @@ class MemberController extends Controller
 
         // $members = User::where('type', 'member')->where('confirmed_for_payment', 0)->get();
 
-        if(Session::has('LoggedAdmin')){
-            
+        if (Session::has('LoggedAdmin')) {
+
             $members = User::get();
             return view('admin.confirm')->with('members', $members);
-
         } else {
             return redirect('/admin.login');
         }
@@ -54,12 +52,11 @@ class MemberController extends Controller
     // SHOW PAYMENT TABLE
     public function payment()
     {
-        
-        if(Session::has('LoggedAdmin')){
-                
+
+        if (Session::has('LoggedAdmin')) {
+
             $members = User::where('paid', 0)->where('confirmed_for_payment', 1)->get();
             return view('admin.payment')->with('members', $members);
-
         } else {
             return redirect('/admin.login');
         }
@@ -82,7 +79,6 @@ class MemberController extends Controller
         // return redirect('/app');
 
         return back();
-
     }
 
 
@@ -96,7 +92,6 @@ class MemberController extends Controller
         $res = $memberToPay->update();
 
         return back();
-
     }
 
 
@@ -107,17 +102,15 @@ class MemberController extends Controller
     {
 
         $referrerCode = null;
-       
+
         if ($request->referral_code) {
 
             $fcode = Code::where('code', $request->referral_code)->first();
 
-            if($fcode && $request->referral_code === $fcode->code) {
-               
-                
-                $referrer_id  = $fcode->user_id;
-                            
+            if ($fcode && $request->referral_code === $fcode->code) {
 
+
+                $referrer_id  = $fcode->user_id;
             } else {
                 return back()->with('codeError', true);
             }
@@ -125,12 +118,12 @@ class MemberController extends Controller
             // $referrer_id = '';
         }
 
-         // transform storage link to public link
+        // transform storage link to public link
         $file_name = $request->file('passport')->store('public/img');
         $name_bits = explode("/", $file_name);
         $passport_url = implode("/", ["storage", $name_bits[1], $name_bits[2]]);
 
-         // transform storage link to public link
+        // transform storage link to public link
         $file_name = $request->file('payment_confirm')->store('public/img');
         $name_bits = explode("/", $file_name);
         $payment_confirm_url = implode("/", ["storage", $name_bits[1], $name_bits[2]]);
@@ -140,13 +133,14 @@ class MemberController extends Controller
         $member->lastname = $request->lastname;
         $member->middlename = $request->middlename;
         $member->phone = $request->phone;
-        $member->email = $request->email; 
+        $member->email = $request->email;
         $member->password = Hash::make($request->password);
         $member->kin_name = $request->kin_name;
         $member->kin_phone = $request->kin_phone;
         $member->account_number = $request->account_number;
         $member->bank = $request->bank;
         $member->date_of_payment = $request->date_of_payment;
+        $member->agree_18yrs = $request->agree_18yrs;
         $member->agree_100k = $request->agree_100k;
         $member->agree_10_percent = $request->agree_10_percent;
         $member->agree_no_advert = $request->agree_no_advert;
@@ -160,7 +154,7 @@ class MemberController extends Controller
         $member_save = $member->save();
 
 
-        if(isset($referrer_id)){
+        if (isset($referrer_id)) {
             $referrer = new Referral;
             $referrer->user_id = $referrer_id;
             $referrer->referral_id = $member->id;
@@ -178,7 +172,7 @@ class MemberController extends Controller
 
             // construct member data to be passed to mailable
             $member_data = [
-                'name' => $member->firstname ." ".  $member->lastname,
+                'name' => $member->firstname . " " .  $member->lastname,
                 'phone' => $member->phone,
                 'email' => $member->email,
                 'referrer_name' => $member->referrer_name,
@@ -199,8 +193,6 @@ class MemberController extends Controller
         } else {
             return back()->with('error', true);
         }
-        
-
     }
 
     public function sendNewRegistrationMail($md)

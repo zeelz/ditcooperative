@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Home | Dit Cooperative</title>
+  <title>Home | DIT Cooperative</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -105,7 +105,7 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero">
     <div class="hero-container">
-      <h3>Welcome to <strong>Dit Cooperative</strong></h3>
+      <h3>Welcome to <strong>DIT Cooperative</strong></h3>
       <h1>We're a Cooperative</h1>
       <h2>Making contributions to help ourselves</h2>
       <a href="#regform" class="btn-get-started scrollto">Start contributing today</a>
@@ -153,12 +153,15 @@
             <h2 class="mb-4 text-center fw-bold" id="regform" >Registration Form</h2>
 
           
+            <div class="alert alert-warning fade show mb-2" role="alert">
+              <span class="fw-bold">Your <span class="fs-4">N100,000</span> contribution payment must be made before completing this form.</span>
+            </div>
 
             <div class="alert alert-info fade show" role="alert">
               <strong>Please ensure to enter your names as it appears on your bank account for easy reconciliation.</strong>
-          </div>
+            </div>
   
-            <form action="{{ route('member-reg') }}" method="POST" enctype="multipart/form-data" role="form" class="php-email-form">
+            <form id="registerForm" action="{{ route('member-reg') }}" method="POST" enctype="multipart/form-data" role="form" class="php-email-form">
               <div class="row mb-2">
                 <div class="col-md-6 form-group">
                   <label for="firstname">Your First Name</label>
@@ -189,7 +192,7 @@
                 </div>
                 <div class="col-md-6 form-group mt-3 mt-md-0">
                   <label for="passport">Please upload your passport</label>
-                  <input type="file" required name="passport" class="form-control mt-2" id="" placeholder="">
+                  <input type="file" name="passport" class="form-control mt-2" id="" placeholder="">
                 </div>
               </div>
 
@@ -239,7 +242,7 @@
               <div class="row mb-2">
                 <div class="col-md-6 form-group">
                   <label for="">Please upload your payment confirmation</label>
-                  <input type="file" required name="payment_confirm" class="form-control mt-2">
+                  <input type="file" name="payment_confirm" class="form-control mt-2">
                 </div>
                 <div class="col-md-6 form-group mt-3 mt-md-0">
                   <label for="date_of_payment">Enter date of payment</label>
@@ -262,40 +265,39 @@
                 </div>
               </div>
 
-              <div class="form-group mt-3 d-flex agreebox">
+              <div class="form-group d-flex agreebox">
+                <input type="checkbox" class="" required name="agree_18yrs" id="subject" placeholder="I acknowledge that: ">
+                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I agree to the fact that I am up to 18 years of age to be a member of this Co-operative.</label>
+              </div>
+
+              <div class="form-group d-flex agreebox">
                 <input type="checkbox" class="" required name="agree_100k" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I agree to one time slot payment of N100,000 and invite two persons who I trust to be part of the Cooperative. Upon confirmation of payment of my 2 referrals i will be gifted with N200,000 (Double payment) within 72 hours.
-</label>
+                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I agree to one time slot payment of N100,000 and invite two persons who I trust to be part of the Cooperative. Upon confirmation of payment of my 2 referrals i will be gifted with N200,000 (Double payment) within 72 hours.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
                 <input type="checkbox" class="" required name="agree_10_percent" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I agree to the process of leaving 10% (N20,000) of the total amount received as administrative charges.
-</label>
+                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I agree to the process of leaving 10% (N20,000) of the total amount received as administrative charges.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
                 <input type="checkbox" class="" required name="agree_no_advert" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I understand that, this is a private Cooperative society and social media advertisement is prohibited.
-</label>
+                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I understand that, this is a private Cooperative society and social media advertisement is prohibited.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
                 <input type="checkbox" class="" required name="agree_no_refund" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I understand there is no provision for refund of payment, I will ensure that I get two trusted members to sign on before making payment
-</label>
+                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I understand there is no provision for refund of payment, I will ensure that I get two trusted members to sign on before making payment.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
                 <input type="checkbox" class="" required name="agree_not_liable" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I understand neither the Cooperative nor my referee is responsible for unforeseen payment delays and dispute resolutions
-</label>
+                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I understand neither the Cooperative nor my referee is responsible for unforeseen payment delays and dispute resolutions.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
                 <input type="checkbox" class="" required name="agree_required_info" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I will ensure to fill and upload all required information before my contribution is processed for gifting
-</label>
+                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I will ensure to fill and upload all required information before my contribution is processed for gifting.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
@@ -306,7 +308,18 @@
               @csrf
               
               
-              <div class="text-center"><button class="btn btn-lg" type="submit">Register</button></div>
+              <div class="d-flex justify-content-center text-center">
+                <button id="registerBtn" class="d-flex btn btn-lg px-5" type="submit">
+                  <span>Register</span>
+                  {{-- @if (false) --}}
+                    
+                    <div id="spinner" class="spinner-border spinner-border-md text-white ms-3 d-none" role="status">
+
+                  {{-- @endif --}}
+                </button>
+              </div>
+              
+              </div>
             </form>
 
           </div>
@@ -322,11 +335,11 @@
   <footer id="footer">
     <div class="container d-flex justify-content-between">
       <div class="copyright">
-        &copy; Copyright <strong><span>Dit Cooperative</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>DIT Cooperative</span></strong>. All Rights Reserved
       </div>
 
       <div class="credits">
-        Developer by <a href="https://azusion.com">Azusion</a>
+        Developed by <a href="https://azusion.com">Azusion</a>
       </div>
 
     </div>
@@ -406,15 +419,25 @@
     })
   </script>
 
+  <script>
+    const registerForm = document.querySelector('#registerForm');
+    const registerBtn = document.querySelector('#registerBtn');
+    const spinner = document.querySelector('#spinner');
+
+
+    registerForm.addEventListener('submit', e => {
+      e.preventDefault()
+      spinner.classList.remove('d-none')
+      registerBtn.setAttribute('disabled', 'disabled')
+      e.target.submit()
+      
+      // setTimeout(() => {
+      //   console.log(e.target)
+      // }, 3000);
+      
+    })
+  </script>
+
 </body>
 
 </html>
-
-
-<!-- I agree to one time slot payment of N100,000 and invite two persons who I trust to be part of the Cooperative. Upon confirmation of payment of my 2 referrals i will be gifted with N200,000 (Double payment) within 72 hours.
-I agree to the process of leaving 10% (N20,000) of the total amount received as administrative charges.
-I understand that, this is a private Cooperative society and social media advertisement is prohibited.
-I understand there is no provision for refund of payment, I will ensure that I get two trusted members to sign on before making payment
-I understand neither the Cooperative nor my referee is responsible for unforeseen payment delays and dispute resolutions
-I will ensure to fill and upload all required information before my contribution is processed for gifting
-I agree to all the terms and conditions above -->

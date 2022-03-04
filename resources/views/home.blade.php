@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Home | Dit Cooperative</title>
+  <title>Home | DIT Cooperative</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -171,11 +171,11 @@
   <footer id="footer">
     <div class="container d-flex justify-content-between">
       <div class="copyright">
-        &copy; Copyright <strong><span>Dit Cooperative</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>DIT Cooperative</span></strong>. All Rights Reserved
       </div>
 
       <div class="credits">
-        Developer by <a href="https://azusion.com">Azusion</a>
+        Developed by <a href="https://azusion.com">Azusion</a>
       </div>
 
     </div>
