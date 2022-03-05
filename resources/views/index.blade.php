@@ -192,7 +192,7 @@
                 </div>
                 <div class="col-md-6 form-group mt-3 mt-md-0">
                   <label for="passport">Please upload your passport</label>
-                  <input type="file" name="passport" class="form-control mt-2" id="" placeholder="">
+                  <input type="file" required name="passport" class="form-control mt-2" id="" placeholder="">
                 </div>
               </div>
 
@@ -242,7 +242,7 @@
               <div class="row mb-2">
                 <div class="col-md-6 form-group">
                   <label for="">Please upload your payment confirmation</label>
-                  <input type="file" name="payment_confirm" class="form-control mt-2">
+                  <input type="file" required name="payment_confirm" class="form-control mt-2">
                 </div>
                 <div class="col-md-6 form-group mt-3 mt-md-0">
                   <label for="date_of_payment">Enter date of payment</label>

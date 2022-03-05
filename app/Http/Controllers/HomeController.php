@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class HomeController extends Controller
@@ -28,7 +28,6 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         return view('index')->with('referral', $request->input('referral'));
-
     }
 
     public function home()
@@ -36,5 +35,4 @@ class HomeController extends Controller
         $members = User::get();
         return view('home')->with('members', $members);
     }
-    
 }

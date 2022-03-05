@@ -148,7 +148,7 @@
 
             @foreach ($members as $member)
     
-              @if ($member->confirmed_for_payment === 0 && $member->paid === 0)
+              @if ($member->confirmed_for_payment == "0" && $member->paid == "0")
                 <tr>
                     <td>{{ $member->id }}. {{ $member->firstname }} {{ $member->lastname }}</td>
 
@@ -158,8 +158,16 @@
                       @foreach ( $member->referrals as $referral )  
 
                       <div class="bg-white border border-success d-inline-block mb-1 mx-1 px-2 py-1 rounded-3 rounded-pill small fst-italic text-success">
-                        {{ $members[$referral->referral_id - 1]->firstname }}
-                        {{ $members[$referral->referral_id - 1]->lastname }}
+                        {{-- {{ $members[$referral->referral_id - 1]->firstname }}
+                        {{ $members[$referral->referral_id - 1]->lastname }} --}}
+
+                        @foreach ($members as $m)
+                          @if ($m->id == $referral->referral_id)
+                            {{ $m->firstname }}
+                            {{ $m->lastname }}
+                          @endif
+                        @endforeach
+
                       </div>
                       
                       @endforeach
