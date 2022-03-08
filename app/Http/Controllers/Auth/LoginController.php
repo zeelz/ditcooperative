@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -43,5 +44,4 @@ class LoginController extends Controller
     {
         return array_merge($request->only($this->username(), 'password'), ['paid' => 0]);
     }
-
 }

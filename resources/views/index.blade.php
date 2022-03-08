@@ -266,43 +266,43 @@
               </div>
 
               <div class="form-group d-flex agreebox">
-                <input type="checkbox" class="" required name="agree_18yrs" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I agree to the fact that I am up to 18 years of age to be a member of this Co-operative.</label>
+                <input type="checkbox" class="" required name="agree_18yrs" id="_18yrs" placeholder="I acknowledge that: ">
+                <label for="_18yrs" style="padding-top: 10px; margin-left: 10px;">I agree to the fact that I am up to 18 years of age to be a member of this Co-operative.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
-                <input type="checkbox" class="" required name="agree_100k" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I agree to one time slot payment of N100,000 and invite two persons who I trust to be part of the Cooperative. Upon confirmation of payment of my 2 referrals i will be gifted with N200,000 (Double payment) within 72 hours.</label>
+                <input type="checkbox" class="" required name="agree_100k" id="_100k" placeholder="I acknowledge that: ">
+                <label for="_100k" style="padding-top: 10px; margin-left: 10px;">I agree to one time slot payment of N100,000 and invite two persons who I trust to be part of the Cooperative. Upon confirmation of payment of my 2 referrals i will be gifted with N200,000 (Double payment) within 72 hours.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
-                <input type="checkbox" class="" required name="agree_10_percent" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I agree to the process of leaving 10% (N20,000) of the total amount received as administrative charges.</label>
+                <input type="checkbox" class="" required name="agree_10_percent" id="_10_percent" placeholder="I acknowledge that: ">
+                <label for="_10_percent" style="padding-top: 10px; margin-left: 10px;">I agree to the process of leaving 10% (N20,000) of the total amount received as administrative charges.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
-                <input type="checkbox" class="" required name="agree_no_advert" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I understand that, this is a private Cooperative society and social media advertisement is prohibited.</label>
+                <input type="checkbox" class="" required name="agree_no_advert" id="_no_advert" placeholder="I acknowledge that: ">
+                <label for="_no_advert" style="padding-top: 10px; margin-left: 10px;">I understand that, this is a private Cooperative society and social media advertisement is prohibited.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
-                <input type="checkbox" class="" required name="agree_no_refund" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I understand there is no provision for refund of payment, I will ensure that I get two trusted members to sign on before making payment.</label>
+                <input type="checkbox" class="" required name="agree_no_refund" id="_no_refund" placeholder="I acknowledge that: ">
+                <label for="_no_refund" style="padding-top: 10px; margin-left: 10px;">I understand there is no provision for refund of payment, I will ensure that I get two trusted members to sign on before making payment.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
-                <input type="checkbox" class="" required name="agree_not_liable" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I understand neither the Cooperative nor my referee is responsible for unforeseen payment delays and dispute resolutions.</label>
+                <input type="checkbox" class="" required name="agree_not_liable" id="_not_liable" placeholder="I acknowledge that: ">
+                <label for="_not_liable" style="padding-top: 10px; margin-left: 10px;">I understand neither the Cooperative nor my referee is responsible for unforeseen payment delays and dispute resolutions.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
-                <input type="checkbox" class="" required name="agree_required_info" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I will ensure to fill and upload all required information before my contribution is processed for gifting.</label>
+                <input type="checkbox" class="" required name="agree_required_info" id="_required_info" placeholder="I acknowledge that: ">
+                <label for="_required_info" style="padding-top: 10px; margin-left: 10px;">I will ensure to fill and upload all required information before my contribution is processed for gifting.</label>
               </div>
 
               <div class="form-group d-flex agreebox">
-                <input type="checkbox" class="" required name="agree_terms" id="subject" placeholder="I acknowledge that: ">
-                <label for="subject" style="padding-top: 10px; margin-left: 10px;">I agree to all the terms and conditions above</label>
+                <input type="checkbox" class="" required name="agree_terms" id="_terms" placeholder="I acknowledge that: ">
+                <label for="_terms" style="padding-top: 10px; margin-left: 10px;">I agree to all the terms and conditions above</label>
               </div>
 
               @csrf
@@ -398,6 +398,16 @@
         icon: "error"
       })
     @endif
+    
+
+    @if ($message = Session::get('sqlError'))
+      swal({
+        title: "Account creation failed",
+        text: "Refresh browser, try again or contact admin",
+        icon: "error"
+      })
+    @endif
+
   </script>
 
 

@@ -135,9 +135,10 @@
                     <th scope="col">Name</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Referrals</th>
+                    <th scope="col">Code</th>
                     <th scope="col">Account Number</th>
                     <th scope="col">Bank</th>
-                    <th scope="col">Date of Payment</th>
+                    <th scope="col">Payment Date</th>
                     <th scope="col" class="text-center">Receipt</th>
                     <th scope="col" class="text-center">Action</th>
                 </tr>
@@ -150,7 +151,7 @@
     
               @if ($member->confirmed_for_payment == "0" && $member->paid == "0")
                 <tr>
-                    <td>{{ $member->id }}. {{ $member->firstname }} {{ $member->lastname }}</td>
+                    <td>{{ $member->firstname }} {{ $member->lastname }}</td>
 
                     <td>{{ $member->phone }}</td>
 
@@ -172,6 +173,7 @@
                       
                       @endforeach
                     </td>
+                    <td>{{ $member->code->code }}</td>
                     <td>{{ $member->account_number }}</td>
                     <td>{{ $member->bank }}</td>
                     <td>{{ $member->date_of_payment }}</td>
@@ -229,7 +231,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <p>Are you sure you this member has met all obligations for payment?</p>
+          <h5 id="modalBodyMsg" class="text-center py-3">Are you sure you this member has met all obligations for payment?</h5>
+
+          <div id="showSpinner" class="d-none d-flex justify-content-center align-items-center py-5">
+            <div id="spinner_" class="spinner-border spinner-border-lg text-success ms-3" role="status"></div>
+          </div>          
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline border" data-bs-dismiss="modal">Close</button>
@@ -238,7 +245,10 @@
             <input type="hidden" name="member_id" value="foobar">
             @csrf()
 
-            <button id="confirmInitiator" type="submit" class="btn btn-main" data-bs-dismiss="modal">Yes</button>
+            <button id="confirmInitiator" type="submit" class="btn btn-main px-3" data-bs-dismiss="__modal__">Yes</button>
+
+            
+
 
           </form>
 
@@ -276,7 +286,7 @@
   <script src="{{ URL::asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
   <!-- <script src="{{ URL::asset('vendor/php-email-form/validate.js') }}"></script> -->
 
-
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="{{ URL::asset('js/main.js') }}"></script>
@@ -285,10 +295,14 @@
   <script>
     const confirmInitiator = document.querySelector('#confirmInitiator');
     const confirmForm = document.querySelector('#confirmForm');
-    const memberId = document.querySelector('#member_id');
-    
+    const memberId = document.querySelector('#member_id');    
+    const showSpinner = document.querySelector('#showSpinner');    
+    const modalBodyMsg = document.querySelector('#modalBodyMsg');
+
     confirmInitiator.addEventListener('click', e => {
       e.preventDefault();
+      showSpinner.classList.remove('d-none')
+      modalBodyMsg.classList.add('d-none')
 
       let i = document.createElement('input');
       i.setAttribute("value", memberId.value);
@@ -297,7 +311,7 @@
 
       confirmForm.appendChild(i);
 
-      confirmForm.submit();
+      confirmForm.submit();      
 
       // let ss = e.target.parentNode;
       
@@ -337,6 +351,25 @@
       img.setAttribute('src', imageUrl)
     })
 
+
+  </script>
+
+  <script>
+    // show success alert if confirm successful
+    @if ($res = Session::has('confirmed'))        
+      swal({
+        title: "Success",
+        text: "Member confirmed for payment",
+        icon: "success",
+        button: {
+          text: "OK",
+          value: true,
+          visible: true,
+          className: "btn-main",
+          closeModal: true,
+        }
+      })
+    @endif
 
   </script>
 </body>

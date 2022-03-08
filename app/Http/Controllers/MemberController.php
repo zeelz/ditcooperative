@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\QueryException;
 use App\Mail\NewRegistration;
 use App\Models\User;
 use App\Models\Code;
@@ -77,6 +78,9 @@ class MemberController extends Controller
         $res = $memberToUpdate->update();
 
         // return redirect('/app');
+        if ($res) {
+            return back()->with('confirmed', true);
+        }
 
         return back();
     }
@@ -151,47 +155,51 @@ class MemberController extends Controller
         $member->passport_url = $passport_url;
         $member->payment_confirm_url = $payment_confirm_url;
 
-        $member_save = $member->save();
+        try {
+            $member_save = $member->save();
 
 
-        if (isset($referrer_id)) {
-            $referrer = new Referral;
-            $referrer->user_id = $referrer_id;
-            $referrer->referral_id = $member->id;
-            $referrer->save();
-        }
+            if (isset($referrer_id)) {
+                $referrer = new Referral;
+                $referrer->user_id = $referrer_id;
+                $referrer->referral_id = $member->id;
+                $referrer->save();
+            }
+
+
+            $code = new Code;
+            $code->user_id = $member->id;
+            $code->code = Str::random(10);
+            $code_save = $code->save();
+
+            if ($member_save && $code_save) {
+
+                // construct member data to be passed to mailable
+                $member_data = [
+                    'name' => $member->firstname . " " .  $member->lastname,
+                    'phone' => $member->phone,
+                    'email' => $member->email,
+                    'referrer_name' => $member->referrer_name,
+                    'kin_name' => $member->kin_name,
+                    'kin_phone' => $member->kin_phone,
+                    'account_number' => $member->account_number,
+                    'bank' => $member->bank,
+                    'date_of_payment' => $member->date_of_payment,
+                    'code' => $code->code
+                ];
 
 
 
-        $code = new Code;
-        $code->user_id = $member->id;
-        $code->code = Str::random(10);
-        $code_save = $code->save();
+                // send mail here //
+                $this->sendNewRegistrationMail($member_data);
 
-        if ($member_save && $code_save) {
-
-            // construct member data to be passed to mailable
-            $member_data = [
-                'name' => $member->firstname . " " .  $member->lastname,
-                'phone' => $member->phone,
-                'email' => $member->email,
-                'referrer_name' => $member->referrer_name,
-                'kin_name' => $member->kin_name,
-                'kin_phone' => $member->kin_phone,
-                'account_number' => $member->account_number,
-                'bank' => $member->bank,
-                'date_of_payment' => $member->date_of_payment,
-                'code' => $code->code
-            ];
-
-
-
-            // send mail here //
-            $this->sendNewRegistrationMail($member_data);
-
-            return back()->with('success', true);
-        } else {
-            return back()->with('error', true);
+                return back()->with('success', true);
+            } else {
+                return back()->with('error', true);
+            }
+        } catch (QueryException $e) {
+            // if($e->errorInfo[1] == 1062)
+            return back()->with('sqlError', true);
         }
     }
 
