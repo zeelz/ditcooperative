@@ -364,9 +364,13 @@
    // change to Session::has('success')
     @if ($message = Session::get('success'))
 
+    const saContent = document.createElement('div');
+    saContent.innerHTML = "Your account has been created! <br>Your referral code is <strong><?php echo Session::get('referralCode'); ?></strong>"
+    saContent.classList.add('text-center')
+
       swal({
         title: "Success",
-        text: "Your account has been created",
+        content: saContent,
         icon: "success",
         buttons: {
           cancel: "OK",
@@ -379,7 +383,6 @@
       }).then( res => {
         if(res === 'profile') location.href = '/home'
       })
-
     @endif
 
     @if ($message = Session::get('error'))

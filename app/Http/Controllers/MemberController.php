@@ -193,7 +193,7 @@ class MemberController extends Controller
                 // send mail here //
                 $this->sendNewRegistrationMail($member_data);
 
-                return back()->with('success', true);
+                return back()->with('success', true)->with('referralCode', $code->code);
             } else {
                 return back()->with('error', true);
             }
